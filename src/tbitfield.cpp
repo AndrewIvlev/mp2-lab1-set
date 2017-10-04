@@ -60,7 +60,13 @@ int TBitField::GetBit(const int n) const // получить значение б
 	if((n<0) || (n >= BitLen))
 		throw n;
 	if((n<-1) && (n < BitLen))
-		return GetMemMask(n)&=pMem[GetMemIndex(n)];
+	{
+		int gmi = GetMemIndex(n);
+		TELEM gmm = GetMemMask(n);
+		gmm&=pMem[gmi];
+		if(gmm!=0) return 1;
+		else return 0;
+	}
 	return 0;
 }
 
@@ -129,9 +135,13 @@ TBitField TBitField::operator~(void) // отрицание
 
 istream &operator>>(istream &istr, TBitField &bf) // ввод
 {
-
+	return istr;
 }
 
 ostream &operator<<(ostream &ostr, const TBitField &bf) // вывод
 {
+	for(int i=1;i<bf.BitLen;i++)
+		if(bf.GetBit(i))
+			ostr << bf.GetBit(i) << ' ';
+	return ostr;
 }
