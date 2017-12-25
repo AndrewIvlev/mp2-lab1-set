@@ -129,10 +129,12 @@ istream &operator>>(istream &istr, TSet &s) // ввод
 
 ostream& operator<<(ostream &ostr, const TSet &s) // вывод
 {
+	ostr << "{ ";
 	for (int i = 0; i < s.BitField.GetLength(); i++)
 	{
-		if (s.IsMember(i) == 1) 
+		if (s.IsMember(i)) 
 			ostr << i << " ";
 	}
+	ostr << " }";
 	return ostr;
 }
